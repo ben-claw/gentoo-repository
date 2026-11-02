@@ -1,4 +1,4 @@
-# Copyright 2026
+# Copyright 2026 Ben Claw
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
