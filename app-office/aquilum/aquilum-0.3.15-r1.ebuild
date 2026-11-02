@@ -1,4 +1,4 @@
-# Copyright 2026
+# Copyright 2026 Ben Claw
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -630,12 +630,13 @@ RESTRICT="mirror"
 S="${WORKDIR}/Aquilum-${PV}/${MY_PN}"
 
 DEPEND="
-	dev-libs/glib:2
+	>=dev-libs/glib-2.56:2
 	media-libs/fontconfig
-	media-libs/gstreamer
+	>=media-libs/gstreamer-1.14
 	>=media-libs/gst-plugins-base-1.14
 "
 
+# Based on .deb package
 RDEPEND="
 	dev-libs/glib
 	media-libs/fontconfig
@@ -657,8 +658,13 @@ RDEPEND="
 	!app-office/aquilum-bin
 "
 
+src_prepare() {
+	default
+	rm .cargo/config.toml || die "File .cargo/config.toml changes target dir. Install phase will fail."
+}
+
 src_install() {
-	newbin ../.artifacts/cargo-native/release/aquilum-native ${MY_PN}
+	newbin "$(cargo_target_dir)/aquilum-native" ${MY_PN}
 	domenu native/packaging/Aquilum.desktop
 	for size in 32 128 ; do
 		newicon --size ${size} native/icons/${size}x${size}.png ${MY_PN}.png
