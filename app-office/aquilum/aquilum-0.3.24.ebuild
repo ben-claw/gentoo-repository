@@ -545,7 +545,6 @@ CRATES="
 	windows_x86_64_gnullvm@0.53.1
 	windows_x86_64_msvc@0.52.6
 	windows_x86_64_msvc@0.53.1
-	winit-android@0.31.0-beta.3
 	winit-appkit@0.31.0-beta.3
 	winit-common@0.31.0-beta.3
 	winit-core@0.31.0-beta.3
@@ -601,7 +600,6 @@ declare -A GIT_CRATES=(
 	[linebender_include_doc_path]='https://github.com/linebender/xilem;271a27a6d4a930f7878d404f9014e3c50a3a9b88;xilem-%commit%/include_doc_path'
 	[tree_arena]='https://github.com/linebender/xilem;271a27a6d4a930f7878d404f9014e3c50a3a9b88;xilem-%commit%/tree_arena'
 )
-
 
 inherit cargo desktop xdg
 
