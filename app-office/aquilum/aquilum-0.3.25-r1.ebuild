@@ -42,6 +42,7 @@ CRATES="
 	async-signal@0.2.14
 	async-task@4.7.1
 	async-trait@0.1.89
+	atk-sys@0.18.2
 	atomic-waker@1.1.2
 	atomic-write-file@0.3.0
 	atomic_refcell@0.1.14
@@ -67,10 +68,12 @@ CRATES="
 	byteorder-lite@0.1.0
 	byteorder@1.5.0
 	bytes@1.12.1
+	cairo-sys-rs@0.18.2
 	calloop-wayland-source@0.4.1
 	calloop@0.14.5
 	cc@1.2.67
 	census@0.4.2
+	cfg-expr@0.15.8
 	cfg-expr@0.20.10
 	cfg-if@1.0.4
 	cfg_aliases@0.2.2
@@ -151,16 +154,21 @@ CRATES="
 	futures-sink@0.3.32
 	futures-task@0.3.32
 	futures-util@0.3.32
+	gdk-pixbuf-sys@0.18.0
+	gdk-sys@0.18.2
 	gethostname@1.1.0
 	getopts@0.2.24
 	getrandom@0.2.17
 	getrandom@0.3.4
 	getrandom@0.4.3
 	gif@0.14.2
+	gio-sys@0.18.1
 	gio-sys@0.21.5
 	glib-macros@0.21.5
+	glib-sys@0.18.1
 	glib-sys@0.21.5
 	glib@0.21.5
+	gobject-sys@0.18.0
 	gobject-sys@0.21.5
 	gstreamer-app-sys@0.24.5
 	gstreamer-app@0.24.5
@@ -170,6 +178,7 @@ CRATES="
 	gstreamer-video-sys@0.24.5
 	gstreamer-video@0.24.5
 	gstreamer@0.24.5
+	gtk-sys@0.18.2
 	guillotiere@0.7.0
 	half@2.7.1
 	harfrust@0.12.0
@@ -301,6 +310,7 @@ CRATES="
 	os_pipe@1.2.3
 	owned_ttf_parser@0.25.1
 	ownedbytes@0.9.0
+	pango-sys@0.18.0
 	parking@2.2.1
 	parking_lot@0.12.5
 	parking_lot_core@0.9.12
@@ -397,6 +407,7 @@ CRATES="
 	serde_derive@1.0.228
 	serde_json@1.0.150
 	serde_repr@0.1.20
+	serde_spanned@0.6.9
 	serde_spanned@1.1.1
 	sha2@0.11.1
 	shlex@2.0.1
@@ -424,6 +435,7 @@ CRATES="
 	syn@2.0.118
 	syn@3.0.6
 	synstructure@0.13.2
+	system-deps@6.2.2
 	system-deps@7.0.8
 	tantivy-bitpacker@0.10.0
 	tantivy-columnar@0.7.0
@@ -434,6 +446,7 @@ CRATES="
 	tantivy-stacker@0.7.0
 	tantivy-tokenizer-api@0.7.0
 	tantivy@0.26.1
+	target-lexicon@0.12.16
 	target-lexicon@0.13.5
 	tempfile@3.27.0
 	thiserror-impl@1.0.69
@@ -451,8 +464,11 @@ CRATES="
 	tinystr@0.8.4
 	tinyvec@1.12.0
 	tinyvec_macros@0.1.1
+	toml@0.8.23
 	toml@1.1.2+spec-1.1.0
+	toml_datetime@0.6.11
 	toml_datetime@1.1.1+spec-1.1.0
+	toml_edit@0.22.27
 	toml_edit@0.25.12+spec-1.1.0
 	toml_parser@1.1.2+spec-1.1.0
 	toml_writer@1.1.1+spec-1.1.0
@@ -555,6 +571,7 @@ CRATES="
 	winit-win32@0.31.0-beta.3
 	winit-x11@0.31.0-beta.3
 	winit@0.31.0-beta.3
+	winnow@0.7.15
 	winnow@1.0.3
 	wit-bindgen@0.57.1
 	wl-clipboard-rs@0.9.4
@@ -620,8 +637,10 @@ LICENSE+="
 	Apache-2.0 Apache-2.0-with-LLVM-exceptions BSD-2 BSD Boost-1.0
 	CC0-1.0 CDLA-Permissive-2.0 ISC MIT Unicode-3.0 ZLIB
 "
+
 SLOT="0"
 KEYWORDS="~amd64"
+IUSE="gtk3"
 RESTRICT="mirror"
 
 # ${P} is not used because directory name starts with capital letter.
@@ -632,15 +651,13 @@ DEPEND="
 	media-libs/fontconfig
 	>=media-libs/gstreamer-1.14
 	>=media-libs/gst-plugins-base-1.14
+	gtk3? ( >=x11-libs/gtk+-3.22 )
 "
 
-# Based on .deb package
 RDEPEND="
-	dev-libs/glib
-	media-libs/fontconfig
+	${DEPEND}
+	dev-libs/wayland
 	media-libs/freetype
-	media-libs/gstreamer
-	media-libs/gst-plugins-base
 	media-libs/gst-plugins-good
 	x11-libs/libX11
 	x11-libs/libXcursor
@@ -648,17 +665,17 @@ RDEPEND="
 	x11-libs/libXi
 	x11-libs/libxcb
 	x11-libs/libxkbcommon
-	dev-libs/wayland
-	|| (
+	!gtk3? ( || (
 		sys-apps/xdg-desktop-portal
 		gnome-extra/zenity
-	)
+	) )
 	!app-office/aquilum-bin
 "
 
 src_prepare() {
 	default
 	rm .cargo/config.toml || die "File .cargo/config.toml changes target dir. Install phase will fail."
+	use gtk3 && eapply "${FILESDIR}/rfd-gtk3.patch"
 }
 
 src_install() {
