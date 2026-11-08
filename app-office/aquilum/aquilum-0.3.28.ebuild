@@ -18,6 +18,7 @@ CRATES="
 	adler2@2.0.1
 	aho-corasick@1.1.4
 	alloc-no-stdlib@2.0.4
+	alloc-stdlib@0.2.4
 	allocator-api2@0.2.21
 	android-activity@0.6.1
 	android-properties@0.2.2
@@ -62,6 +63,7 @@ CRATES="
 	bon@3.9.3
 	borsh@1.8.1
 	brotli-decompressor@5.0.3
+	brotli@8.0.4
 	bumpalo@3.20.3
 	bytemuck@1.25.2
 	bytemuck_derive@1.12.1
@@ -133,6 +135,7 @@ CRATES="
 	fax@0.2.7
 	fdeflate@0.3.7
 	fearless_simd@0.7.0
+	fearless_simd@1.2.0
 	find-msvc-tools@0.1.9
 	fixedbitset@0.5.7
 	flate2@1.1.9
@@ -140,7 +143,7 @@ CRATES="
 	fnv@1.0.7
 	foldhash@0.1.5
 	foldhash@0.2.0
-	font-types@0.12.6
+	font-types@0.12.7
 	fontique@0.12.0
 	form_urlencoded@1.2.2
 	fs4@0.13.1
@@ -186,6 +189,14 @@ CRATES="
 	hashbrown@0.16.1
 	hashbrown@0.17.1
 	hashlink@0.12.1
+	hayro-ccitt@0.5.0
+	hayro-cmap@0.1.1
+	hayro-font@0.5.0
+	hayro-interpret@0.9.0
+	hayro-jbig2@0.4.0
+	hayro-jpeg2000@0.5.0
+	hayro-postscript@0.2.0
+	hayro-syntax@0.9.0
 	heck@0.5.0
 	hermit-abi@0.5.2
 	hex@0.4.3
@@ -332,6 +343,7 @@ CRATES="
 	phf_macros@0.13.1
 	phf_shared@0.11.3
 	phf_shared@0.13.1
+	pic-scale@0.7.12
 	pico-args@0.5.0
 	pin-project-internal@1.1.13
 	pin-project-lite@0.2.17
@@ -371,6 +383,7 @@ CRATES="
 	rayon-core@1.13.0
 	rayon@1.12.0
 	read-fonts@0.41.0
+	read-fonts@0.46.0
 	redox_event@0.4.8
 	redox_syscall@0.5.18
 	redox_syscall@0.9.4
@@ -419,6 +432,7 @@ CRATES="
 	siphasher@1.0.3
 	sketches-ddsketch@0.4.0
 	skrifa@0.44.0
+	skrifa@0.49.0
 	slab@0.4.12
 	smallvec@1.16.3
 	smithay-client-toolkit@0.21.1
@@ -604,6 +618,7 @@ CRATES="
 	zerotrie@0.2.5
 	zerovec-derive@0.11.6
 	zerovec@0.11.8
+	zlib-rs@0.6.8
 	zmij@1.0.21
 	zune-core@0.5.3
 	zune-jpeg@0.5.15
@@ -680,7 +695,7 @@ src_prepare() {
 
 src_install() {
 	newbin "$(cargo_target_dir)/aquilum-native" ${MY_PN}
-	domenu native/packaging/Aquilum.desktop
+	domenu native/packaging/aquilum-app.desktop
 	for size in 32 128 ; do
 		newicon --size ${size} native/icons/${size}x${size}.png ${MY_PN}.png
 	done
