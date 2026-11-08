@@ -41,7 +41,7 @@ RDEPEND="
 
 src_install() {
 	dobin "${WORKDIR}"/usr/bin/aquilum-app
-	domenu "${WORKDIR}"/usr/share/applications/Aquilum.desktop
+	domenu "${WORKDIR}"/usr/share/applications/aquilum-app.desktop
 	for size in 32 128 256 ; do
 		doicon --size ${size} usr/share/icons/hicolor/${size}x${size}/apps/${MY_PN}.png
 	done
