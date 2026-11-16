@@ -10,11 +10,8 @@ CRATES="
 	ab_glyph_rasterizer@0.1.10
 	accesskit@0.24.1
 	accesskit_atspi_common@0.19.1
-	accesskit_consumer@0.35.0
 	accesskit_consumer@0.38.0
-	accesskit_macos@0.26.3
 	accesskit_unix@0.22.1
-	accesskit_windows@0.32.1
 	adler2@2.0.1
 	aho-corasick@1.1.4
 	alloc-no-stdlib@2.0.4
@@ -56,7 +53,6 @@ CRATES="
 	bitpacking@0.9.3
 	blake3@1.8.5
 	block-buffer@0.12.1
-	block2@0.5.1
 	block2@0.6.2
 	blocking@1.6.2
 	bon-macros@3.9.3
@@ -283,33 +279,16 @@ CRATES="
 	num-traits@0.2.19
 	num_enum@0.7.6
 	num_enum_derive@0.7.6
-	objc-sys@0.3.5
-	objc2-app-kit@0.2.2
 	objc2-app-kit@0.3.2
-	objc2-av-foundation@0.3.2
-	objc2-avf-audio@0.3.2
-	objc2-core-audio-types@0.3.2
-	objc2-core-audio@0.3.2
-	objc2-core-data@0.2.2
 	objc2-core-foundation@0.3.2
 	objc2-core-graphics@0.3.2
-	objc2-core-image@0.2.2
-	objc2-core-image@0.3.2
-	objc2-core-media@0.3.2
 	objc2-core-text@0.3.2
 	objc2-core-video@0.3.2
 	objc2-encode@4.1.0
-	objc2-foundation@0.2.2
 	objc2-foundation@0.3.2
-	objc2-image-io@0.3.2
 	objc2-io-surface@0.3.2
-	objc2-media-toolbox@0.3.2
-	objc2-metal@0.2.2
-	objc2-metal@0.3.2
-	objc2-quartz-core@0.2.2
 	objc2-quartz-core@0.3.2
 	objc2-ui-kit@0.3.2
-	objc2@0.5.3
 	objc2@0.6.5
 	once_cell@1.21.4
 	oneshot@0.1.13
@@ -690,7 +669,13 @@ RDEPEND="
 src_prepare() {
 	default
 	rm .cargo/config.toml || die "File .cargo/config.toml changes target dir. Install phase will fail."
+	eapply "${FILESDIR}/linux-deps.patch"
 	use gtk3 && eapply "${FILESDIR}/rfd-gtk3.patch"
+}
+
+src_configure() {
+	local myfeatures=(installed)
+	cargo_src_configure
 }
 
 src_install() {
