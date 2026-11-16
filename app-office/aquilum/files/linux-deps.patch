@@ -1,0 +1,639 @@
+diff --git a/aquilum-app/Cargo.lock b/aquilum-app/Cargo.lock
+index 84ea9f2..1771d0f 100644
+--- aquilum-app/Cargo.lock
++++ aquilum-app/Cargo.lock
+@@ -34,23 +34,13 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "023da0e5097f46df7092d5280b02efb9bbf8d93298daeced42652463e357d636"
+ dependencies = [
+  "accesskit",
+- "accesskit_consumer 0.38.0",
++ "accesskit_consumer",
+  "atspi-common",
+  "phf 0.13.1",
+  "serde",
+  "zvariant",
+ ]
+ 
+-[[package]]
+-name = "accesskit_consumer"
+-version = "0.35.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "53cf47daed85312e763fbf85ceca136e0d7abc68e0a7e12abe11f48172bc3b10"
+-dependencies = [
+- "accesskit",
+- "hashbrown 0.16.1",
+-]
+-
+ [[package]]
+ name = "accesskit_consumer"
+ version = "0.38.0"
+@@ -61,20 +51,6 @@ dependencies = [
+  "hashbrown 0.16.1",
+ ]
+ 
+-[[package]]
+-name = "accesskit_macos"
+-version = "0.26.3"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "ce02dc63b43f0c9296af9ac946312a2dc8814427d7a64d2d600971dac55b6076"
+-dependencies = [
+- "accesskit",
+- "accesskit_consumer 0.38.0",
+- "hashbrown 0.16.1",
+- "objc2 0.5.3",
+- "objc2-app-kit 0.2.2",
+- "objc2-foundation 0.2.2",
+-]
+-
+ [[package]]
+ name = "accesskit_unix"
+ version = "0.22.1"
+@@ -93,20 +69,6 @@ dependencies = [
+  "zbus",
+ ]
+ 
+-[[package]]
+-name = "accesskit_windows"
+-version = "0.32.1"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "eff7009f1a532e917d66970a1e80c965140c6cfbbabbdde3d64e5431e6c78e21"
+-dependencies = [
+- "accesskit",
+- "accesskit_consumer 0.35.0",
+- "hashbrown 0.16.1",
+- "static_assertions",
+- "windows",
+- "windows-core",
+-]
+-
+ [[package]]
+ name = "adler2"
+ version = "2.0.1"
+@@ -159,7 +121,6 @@ dependencies = [
+  "ndk-context",
+  "ndk-sys",
+  "num_enum",
+- "simd_cesu8",
+  "thiserror 2.0.18",
+ ]
+ 
+@@ -235,9 +196,7 @@ dependencies = [
+ name = "aquilum-native"
+ version = "0.3.28"
+ dependencies = [
+- "accesskit_macos",
+  "accesskit_unix",
+- "accesskit_windows",
+  "aq_trace",
+  "aquilum-core",
+  "arboard",
+@@ -255,20 +214,10 @@ dependencies = [
+  "gstreamer-video",
+  "hayro",
+  "image",
+- "jni",
+  "jpeg-decoder",
+  "krilla",
+  "masonry",
+  "minisign-verify",
+- "ndk",
+- "ndk-sys",
+- "objc2 0.6.5",
+- "objc2-av-foundation",
+- "objc2-core-foundation",
+- "objc2-core-graphics",
+- "objc2-core-media",
+- "objc2-core-video",
+- "objc2-foundation 0.3.2",
+  "png",
+  "pulldown-cmark",
+  "ratex-font",
+@@ -287,8 +236,6 @@ dependencies = [
+  "unicode-segmentation",
+  "uuid",
+  "vello_cpu",
+- "windows",
+- "windows-core",
+  "winit",
+  "write-fonts",
+  "wuff",
+@@ -303,11 +250,11 @@ dependencies = [
+  "clipboard-win",
+  "image",
+  "log",
+- "objc2 0.6.5",
+- "objc2-app-kit 0.3.2",
++ "objc2",
++ "objc2-app-kit",
+  "objc2-core-foundation",
+  "objc2-core-graphics",
+- "objc2-foundation 0.3.2",
++ "objc2-foundation",
+  "parking_lot",
+  "percent-encoding",
+  "windows-sys 0.60.2",
+@@ -626,22 +573,13 @@ dependencies = [
+  "hybrid-array",
+ ]
+ 
+-[[package]]
+-name = "block2"
+-version = "0.5.1"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "2c132eebf10f5cad5289222520a4a058514204aed6d791f1cf4fe8088b82d15f"
+-dependencies = [
+- "objc2 0.5.3",
+-]
+-
+ [[package]]
+ name = "block2"
+ version = "0.6.2"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "cdeb9d870516001442e364c5220d3574d2da8dc765554b4a617230d33fa58ef5"
+ dependencies = [
+- "objc2 0.6.5",
++ "objc2",
+ ]
+ 
+ [[package]]
+@@ -1057,9 +995,9 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "1e0e367e4e7da84520dedcac1901e4da967309406d1e51017ae1abfb97adbd38"
+ dependencies = [
+  "bitflags",
+- "block2 0.6.2",
++ "block2",
+  "libc",
+- "objc2 0.6.5",
++ "objc2",
+ ]
+ 
+ [[package]]
+@@ -1361,10 +1299,10 @@ dependencies = [
+  "hashbrown 0.17.1",
+  "linebender_resource_handle",
+  "memmap2",
+- "objc2 0.6.5",
++ "objc2",
+  "objc2-core-foundation",
+  "objc2-core-text",
+- "objc2-foundation 0.3.2",
++ "objc2-foundation",
+  "parlance",
+  "read-fonts 0.41.0",
+  "roxmltree",
+@@ -2805,22 +2743,6 @@ dependencies = [
+  "syn 2.0.118",
+ ]
+ 
+-[[package]]
+-name = "objc-sys"
+-version = "0.3.5"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "cdb91bdd390c7ce1a8607f35f3ca7151b65afc0ff5ff3b34fa350f7d7c7e4310"
+-
+-[[package]]
+-name = "objc2"
+-version = "0.5.3"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "19d5490aaf8f1d7cf7688dfa9b0ce07900e168852c45cd2c03f534dfd27cfd0b"
+-dependencies = [
+- "objc-sys",
+- "objc2-encode",
+-]
+-
+ [[package]]
+ name = "objc2"
+ version = "0.6.5"
+@@ -2830,22 +2752,6 @@ dependencies = [
+  "objc2-encode",
+ ]
+ 
+-[[package]]
+-name = "objc2-app-kit"
+-version = "0.2.2"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "e4e89ad9e3d7d297152b17d39ed92cd50ca8063a89a9fa569046d41568891eff"
+-dependencies = [
+- "bitflags",
+- "block2 0.5.1",
+- "libc",
+- "objc2 0.5.3",
+- "objc2-core-data",
+- "objc2-core-image 0.2.2",
+- "objc2-foundation 0.2.2",
+- "objc2-quartz-core 0.2.2",
+-]
+-
+ [[package]]
+ name = "objc2-app-kit"
+ version = "0.3.2"
+@@ -2853,78 +2759,11 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "d49e936b501e5c5bf01fda3a9452ff86dc3ea98ad5f283e1455153142d97518c"
+ dependencies = [
+  "bitflags",
+- "block2 0.6.2",
+- "objc2 0.6.5",
++ "block2",
++ "objc2",
+  "objc2-core-foundation",
+  "objc2-core-graphics",
+- "objc2-foundation 0.3.2",
+-]
+-
+-[[package]]
+-name = "objc2-av-foundation"
+-version = "0.3.2"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "478ae33fcac9df0a18db8302387c666b8ef08a3e2d62b510ca4fc278a384b6c0"
+-dependencies = [
+- "bitflags",
+- "block2 0.6.2",
+- "dispatch2",
+- "objc2 0.6.5",
+- "objc2-avf-audio",
+- "objc2-core-audio-types",
+- "objc2-core-foundation",
+- "objc2-core-graphics",
+- "objc2-core-image 0.3.2",
+- "objc2-core-media",
+- "objc2-core-video",
+- "objc2-foundation 0.3.2",
+- "objc2-image-io",
+- "objc2-media-toolbox",
+- "objc2-quartz-core 0.3.2",
+-]
+-
+-[[package]]
+-name = "objc2-avf-audio"
+-version = "0.3.2"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "13a380031deed8e99db00065c45937da434ca987c034e13b87e4441f9e4090be"
+-dependencies = [
+- "objc2 0.6.5",
+- "objc2-foundation 0.3.2",
+-]
+-
+-[[package]]
+-name = "objc2-core-audio"
+-version = "0.3.2"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "e1eebcea8b0dbff5f7c8504f3107c68fc061a3eb44932051c8cf8a68d969c3b2"
+-dependencies = [
+- "dispatch2",
+- "objc2 0.6.5",
+- "objc2-core-audio-types",
+- "objc2-core-foundation",
+-]
+-
+-[[package]]
+-name = "objc2-core-audio-types"
+-version = "0.3.2"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "5a89f2ec274a0cf4a32642b2991e8b351a404d290da87bb6a9a9d8632490bd1c"
+-dependencies = [
+- "bitflags",
+- "objc2 0.6.5",
+-]
+-
+-[[package]]
+-name = "objc2-core-data"
+-version = "0.2.2"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "617fbf49e071c178c0b24c080767db52958f716d9eabdf0890523aeae54773ef"
+-dependencies = [
+- "bitflags",
+- "block2 0.5.1",
+- "objc2 0.5.3",
+- "objc2-foundation 0.2.2",
++ "objc2-foundation",
+ ]
+ 
+ [[package]]
+@@ -2934,10 +2773,9 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "2a180dd8642fa45cdb7dd721cd4c11b1cadd4929ce112ebd8b9f5803cc79d536"
+ dependencies = [
+  "bitflags",
+- "block2 0.6.2",
++ "block2",
+  "dispatch2",
+- "libc",
+- "objc2 0.6.5",
++ "objc2",
+ ]
+ 
+ [[package]]
+@@ -2947,51 +2785,11 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "e022c9d066895efa1345f8e33e584b9f958da2fd4cd116792e15e07e4720a807"
+ dependencies = [
+  "bitflags",
+- "block2 0.6.2",
+  "dispatch2",
+  "libc",
+- "objc2 0.6.5",
++ "objc2",
+  "objc2-core-foundation",
+  "objc2-io-surface",
+- "objc2-metal 0.3.2",
+-]
+-
+-[[package]]
+-name = "objc2-core-image"
+-version = "0.2.2"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "55260963a527c99f1819c4f8e3b47fe04f9650694ef348ffd2227e8196d34c80"
+-dependencies = [
+- "block2 0.5.1",
+- "objc2 0.5.3",
+- "objc2-foundation 0.2.2",
+- "objc2-metal 0.2.2",
+-]
+-
+-[[package]]
+-name = "objc2-core-image"
+-version = "0.3.2"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "e5d563b38d2b97209f8e861173de434bd0214cf020e3423a52624cd1d989f006"
+-dependencies = [
+- "objc2 0.6.5",
+- "objc2-foundation 0.3.2",
+-]
+-
+-[[package]]
+-name = "objc2-core-media"
+-version = "0.3.2"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "05ec576860167a15dd9fce7fbee7512beb4e31f532159d3482d1f9c6caedf31d"
+-dependencies = [
+- "bitflags",
+- "block2 0.6.2",
+- "dispatch2",
+- "objc2 0.6.5",
+- "objc2-core-audio",
+- "objc2-core-audio-types",
+- "objc2-core-foundation",
+- "objc2-core-video",
+ ]
+ 
+ [[package]]
+@@ -3011,12 +2809,8 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "d425caf1df73233f29fd8a5c3e5edbc30d2d4307870f802d18f00d83dc5141a6"
+ dependencies = [
+  "bitflags",
+- "block2 0.6.2",
+- "objc2 0.6.5",
+  "objc2-core-foundation",
+  "objc2-core-graphics",
+- "objc2-io-surface",
+- "objc2-metal 0.3.2",
+ ]
+ 
+ [[package]]
+@@ -3025,18 +2819,6 @@ version = "4.1.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "ef25abbcd74fb2609453eb695bd2f860d389e457f67dc17cafc8b8cbc89d0c33"
+ 
+-[[package]]
+-name = "objc2-foundation"
+-version = "0.2.2"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "0ee638a5da3799329310ad4cfa62fbf045d5f56e3ef5ba4149e7452dcf89d5a8"
+-dependencies = [
+- "bitflags",
+- "block2 0.5.1",
+- "libc",
+- "objc2 0.5.3",
+-]
+-
+ [[package]]
+ name = "objc2-foundation"
+ version = "0.3.2"
+@@ -3044,23 +2826,11 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "e3e0adef53c21f888deb4fa59fc59f7eb17404926ee8a6f59f5df0fd7f9f3272"
+ dependencies = [
+  "bitflags",
+- "block2 0.6.2",
+- "libc",
+- "objc2 0.6.5",
++ "block2",
++ "objc2",
+  "objc2-core-foundation",
+ ]
+ 
+-[[package]]
+-name = "objc2-image-io"
+-version = "0.3.2"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "32b0446e98cf4a784cc7a0177715ff317eeaa8463841c616cfc78aa4f953c4ea"
+-dependencies = [
+- "objc2 0.6.5",
+- "objc2-core-foundation",
+- "objc2-core-graphics",
+-]
+-
+ [[package]]
+ name = "objc2-io-surface"
+ version = "0.3.2"
+@@ -3068,56 +2838,8 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "180788110936d59bab6bd83b6060ffdfffb3b922ba1396b312ae795e1de9d81d"
+ dependencies = [
+  "bitflags",
+- "objc2 0.6.5",
+- "objc2-core-foundation",
+-]
+-
+-[[package]]
+-name = "objc2-media-toolbox"
+-version = "0.3.2"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "edd9fdde720df3da7046bb9097811000c1e7ab5cd579fa89d96b27d56781fb30"
+-dependencies = [
+- "objc2 0.6.5",
+- "objc2-core-audio-types",
++ "objc2",
+  "objc2-core-foundation",
+- "objc2-core-media",
+-]
+-
+-[[package]]
+-name = "objc2-metal"
+-version = "0.2.2"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "dd0cba1276f6023976a406a14ffa85e1fdd19df6b0f737b063b95f6c8c7aadd6"
+-dependencies = [
+- "bitflags",
+- "block2 0.5.1",
+- "objc2 0.5.3",
+- "objc2-foundation 0.2.2",
+-]
+-
+-[[package]]
+-name = "objc2-metal"
+-version = "0.3.2"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "a0125f776a10d00af4152d74616409f0d4a2053a6f57fa5b7d6aa2854ac04794"
+-dependencies = [
+- "bitflags",
+- "objc2 0.6.5",
+- "objc2-foundation 0.3.2",
+-]
+-
+-[[package]]
+-name = "objc2-quartz-core"
+-version = "0.2.2"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "e42bee7bff906b14b167da2bac5efe6b6a07e6f7c0a21a7308d40c960242dc7a"
+-dependencies = [
+- "bitflags",
+- "block2 0.5.1",
+- "objc2 0.5.3",
+- "objc2-foundation 0.2.2",
+- "objc2-metal 0.2.2",
+ ]
+ 
+ [[package]]
+@@ -3127,9 +2849,9 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "96c1358452b371bf9f104e21ec536d37a650eb10f7ee379fff67d2e08d537f1f"
+ dependencies = [
+  "bitflags",
+- "objc2 0.6.5",
++ "objc2",
+  "objc2-core-foundation",
+- "objc2-foundation 0.3.2",
++ "objc2-foundation",
+ ]
+ 
+ [[package]]
+@@ -3139,9 +2861,9 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "d87d638e33c06f577498cbcc50491496a3ed4246998a7fbba7ccb98b1e7eab22"
+ dependencies = [
+  "bitflags",
+- "objc2 0.6.5",
++ "objc2",
+  "objc2-core-foundation",
+- "objc2-foundation 0.3.2",
++ "objc2-foundation",
+ ]
+ 
+ [[package]]
+@@ -3911,14 +3633,14 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "a15ad77d9e70a92437d8f74c35d99b4e4691128df018833e99f90bcd36152672"
+ dependencies = [
+  "ashpd",
+- "block2 0.6.2",
++ "block2",
+  "dispatch2",
+  "js-sys",
+  "log",
+- "objc2 0.6.5",
+- "objc2-app-kit 0.3.2",
++ "objc2",
++ "objc2-app-kit",
+  "objc2-core-foundation",
+- "objc2-foundation 0.3.2",
++ "objc2-foundation",
+  "pollster",
+  "raw-window-handle",
+  "urlencoding",
+@@ -4377,11 +4099,11 @@ dependencies = [
+  "js-sys",
+  "memmap2",
+  "ndk",
+- "objc2 0.6.5",
++ "objc2",
+  "objc2-core-foundation",
+  "objc2-core-graphics",
+- "objc2-foundation 0.3.2",
+- "objc2-quartz-core 0.3.2",
++ "objc2-foundation",
++ "objc2-quartz-core",
+  "raw-window-handle",
+  "redox_syscall 0.5.18",
+  "rustix 1.1.4",
+@@ -5787,15 +5509,15 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "23343ec0ea7ac6aa72f38009a6ff66fb63bcf6395e0622fba72794d2a762ab42"
+ dependencies = [
+  "bitflags",
+- "block2 0.6.2",
++ "block2",
+  "dispatch2",
+  "dpi",
+- "objc2 0.6.5",
+- "objc2-app-kit 0.3.2",
++ "objc2",
++ "objc2-app-kit",
+  "objc2-core-foundation",
+  "objc2-core-graphics",
+  "objc2-core-video",
+- "objc2-foundation 0.3.2",
++ "objc2-foundation",
+  "raw-window-handle",
+  "smol_str",
+  "tracing",
+@@ -5809,12 +5531,12 @@ version = "0.31.0-beta.3"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "e90422ff1c04502aaaac1dad1d099791c2bbb3fbb3f823019e0ce5cdeee04025"
+ dependencies = [
+- "block2 0.6.2",
++ "block2",
+  "dpi",
+  "memmap2",
+- "objc2 0.6.5",
++ "objc2",
+  "objc2-core-foundation",
+- "objc2-foundation 0.3.2",
++ "objc2-foundation",
+  "smol_str",
+  "tracing",
+  "winit-core",
+@@ -5862,12 +5584,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "83315a3ea1739c8466cf23d35e3b0a2cb20c9515d8857666b633afef484740b5"
+ dependencies = [
+  "bitflags",
+- "block2 0.6.2",
++ "block2",
+  "dispatch2",
+  "dpi",
+- "objc2 0.6.5",
++ "objc2",
+  "objc2-core-foundation",
+- "objc2-foundation 0.3.2",
++ "objc2-foundation",
+  "objc2-ui-kit",
+  "raw-window-handle",
+  "smol_str",
+diff --git a/aquilum-app/native/Cargo.toml b/aquilum-app/native/Cargo.toml
+index fdd1a4a..51a1ab1 100644
+--- aquilum-app/native/Cargo.toml
++++ aquilum-app/native/Cargo.toml
+@@ -72,31 +72,9 @@ softbuffer = "0.4.8"
+ arboard = { version = "3", default-features = false, features = ["image-data", "wayland-data-control"] }
+ rfd = "0.16"
+ 
+-[target.'cfg(target_os = "android")'.dependencies]
+-winit = { version = "=0.31.0-beta.3", features = ["android-game-activity"] }
+-jni = "0.22"
+-ndk = { version = "0.9", default-features = false, features = ["rwh_06", "nativewindow"] }
+-ndk-sys = "0.6"
+-
+-[target.'cfg(target_os = "macos")'.dependencies]
+-accesskit_macos = "=0.26.3"
+-objc2 = "0.6"
+-objc2-foundation = "0.3"
+-objc2-av-foundation = { version = "0.3", features = ["objc2-core-media", "objc2-core-video", "objc2-core-graphics"] }
+-objc2-core-media = "0.3"
+-objc2-core-video = "0.3"
+-objc2-core-graphics = "0.3"
+-objc2-core-foundation = "0.3"
+-
+ [target.'cfg(all(unix, not(any(target_os = "macos", target_os = "android"))))'.dependencies]
+ accesskit_unix = "=0.22.1"
+ 
+-[target.'cfg(target_os = "windows")'.dependencies]
+-windows-core = "0.62"
+-windows = { version = "0.62", features = ["Win32_Foundation", "Win32_Graphics_Direct3D", "Win32_Graphics_Direct3D11", "Win32_Graphics_DirectManipulation", "Win32_Graphics_Dwm", "Win32_Graphics_Dxgi", "Win32_Graphics_Dxgi_Common", "Win32_Graphics_Gdi", "Win32_Graphics_Imaging", "Win32_Media_Audio", "Win32_Media_MediaFoundation", "Win32_System_Com", "Win32_System_Com_StructuredStorage", "Win32_System_Variant", "Win32_System_LibraryLoader", "Win32_System_Memory", "Win32_System_ProcessStatus", "Win32_System_Diagnostics_ToolHelp", "Win32_System_Threading", "Win32_System_Registry", "Win32_UI_Input_Pointer", "Win32_UI_Shell", "Win32_UI_Shell_Common", "Win32_UI_WindowsAndMessaging"] }
+-# Под accesskit 0.24 из Masonry: та же версия, что у accesskit_winit 0.32.
+-accesskit_windows = "=0.32.1"
+-
+ [target.'cfg(target_os = "linux")'.dependencies]
+ ashpd = { version = "0.11", default-features = false, features = ["async-std"] }
+ futures-lite = "2"
