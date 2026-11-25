@@ -428,6 +428,7 @@ CRATES="
 	syn@2.0.118
 	syn@3.0.6
 	synstructure@0.13.2
+	sys-locale@0.3.2
 	system-deps@6.2.2
 	system-deps@7.0.8
 	tantivy-bitpacker@0.10.0
